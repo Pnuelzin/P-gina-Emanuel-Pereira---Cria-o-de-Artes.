@@ -756,9 +756,9 @@ img {
   background-image:
     radial-gradient(
       120% 85% at 50% 42%,
-      rgba(0, 0, 0, 0.68) 0%,
-      rgba(0, 0, 0, 0.84) 45%,
-      rgba(0, 0, 0, 0.96) 100%
+      rgba(0, 0, 0, 0.1) 0%,
+      rgba(0, 0, 0, 0.7) 45%,
+      rgba(0, 0, 0, 1) 100%
     ),
     url("assets/bg-dobras.png"), url("assets/bg-dobras.png");
   background-repeat: no-repeat;
