@@ -82,6 +82,8 @@
      ------------------------------------------------------------------------ */
   .hero {
     position: relative;
+    /* Foto maior no tablet: original de volta (o zoom fica no bloco TABLET
+       lá no fim do arquivo, sem deslocar divisória/textos/botão) */
     padding: clamp(300px, 83vw, 480px) var(--pad-x) 54px;
     background: var(--color-surface);
   }
@@ -94,7 +96,7 @@
     top: 0;
     left: 50%;
     width: 100vw;
-    height: clamp(340px, 91.3vw, 520px);
+    height: clamp(340px, 91.3vw, 500px);
     overflow: hidden;
     transform: translateX(-50%);
     pointer-events: none;
@@ -120,7 +122,7 @@
     z-index: 2;
     max-width: var(--content);
     margin: 0 auto;
-    padding: 30px 24px 28px;
+    padding: 30px 24px 100px;
     border-radius: 14px;
     background: rgba(235, 235, 235, 0.38);
     -webkit-backdrop-filter: blur(16px) saturate(1.15);
@@ -372,11 +374,16 @@
         rgba(0, 0, 0, 0.84) 45%,
         rgba(0, 0, 0, 0.96) 100%
       ),
-      url("assets/bg-dobras.png"),
-      url("assets/bg-dobras.png");
+      url("assets/bg-dobras.png"), url("assets/bg-dobras.png");
     background-repeat: no-repeat;
-    background-size: 100% 100%, cover, cover;
-    background-position: center center, center top, center top;
+    background-size:
+      100% 100%,
+      cover,
+      cover;
+    background-position:
+      center center,
+      center top,
+      center top;
     pointer-events: none;
   }
 
@@ -456,6 +463,20 @@
   }
 }
 
+/* TABLET (640–1229.98px): foto da hero maior — ZOOM com recorte nas
+   laterais. A janela da foto segue o próprio padding da hero (valor +
+   40px, a mesma folga do desenho), então ela e o conteúdo abaixo sobem/
+   descem JUNTOS de forma monotônica — sem o vai-e-vem do resize. */
+@media (min-width: 640px) and (max-width: 1229.98px) {
+  .hero__image {
+    width: 118vw; /* zoom da foto: recorta nas laterais */
+  }
+
+  .hero__media {
+    height: calc(clamp(300px, 83vw, 480px) + 40px);
+  }
+}
+
 /* Ajustes finos para telas bem estreitas (iPhone SE e similares) */
 @media (max-width: 359.98px) {
   :root {
@@ -464,6 +485,11 @@
 
   .hero__panel {
     padding: 26px 18px 24px;
+  }
+
+  /* Respiro extra entre a dobra 2 (divisória/vidro) e a hero */
+  .hero {
+    padding-bottom: 84px; /* base: 54px */
   }
 
   .btn {
