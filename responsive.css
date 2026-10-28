@@ -1,0 +1,483 @@
+/* ==========================================================================
+   Arte. — Layout responsivo (celular e tablet)
+   --------------------------------------------------------------------------
+   O desktop (>= 1200px) continua em styles.css, com o desenho absoluto do
+   Figma. Abaixo disso, o mesmo HTML vira uma coluna vertical fluida:
+   hero → divisor → manifesto → trabalhos → portfólio → CTA → rodapé.
+   Nada é duplicado: as mesmas seções e o mesmo carrossel se adaptam.
+   ========================================================================== */
+
+@media (max-width: 1229.98px) {
+  :root {
+    --gutter: clamp(20px, 6.2vw, 48px);
+    --content: 600px;
+    /* Margem que centraliza o conteúdo em 600px e nunca fica menor que 20px */
+    --pad-x: max(var(--gutter), calc((100% - var(--content)) / 2));
+  }
+
+  /* ------------------------------------------------------------------------
+     Base
+     ------------------------------------------------------------------------ */
+  body {
+    overflow-x: hidden;
+  }
+
+  .page {
+    width: 100%;
+    min-height: 0;
+    margin: 0;
+  }
+
+  /* Desliga o deslocamento criado para a hero de 100vh do desktop */
+  .btn--portfolio,
+  .btn--quote,
+  .manifesto__title,
+  .manifesto__text,
+  .trabalhos__thumb,
+  .portfolio__bg,
+  .portfolio__title,
+  .portfolio__text,
+  .carousel,
+  .portfolio__texture,
+  .cta__card,
+  .cta__title,
+  .cta__text,
+  .final-bg,
+  .glass-tiles,
+  .footer,
+  .icone-conferir {
+    translate: none;
+  }
+
+  /* Elementos que eram posicionados em cima da .page voltam ao fluxo */
+  .hero__eyebrow,
+  .hero__title,
+  .hero__text,
+  .btn,
+  .manifesto__title,
+  .manifesto__text,
+  .trabalhos__thumb,
+  .portfolio__title,
+  .portfolio__text,
+  .cta__title,
+  .cta__text {
+    position: static;
+    inset: auto;
+  }
+
+  .hero__eyebrow,
+  .hero__title,
+  .hero__text,
+  .manifesto__title,
+  .manifesto__text,
+  .portfolio__title,
+  .portfolio__text,
+  .cta__title,
+  .cta__text {
+    width: auto;
+  }
+
+  /* ------------------------------------------------------------------------
+     Hero
+     ------------------------------------------------------------------------ */
+  .hero {
+    position: relative;
+    padding: clamp(300px, 83vw, 480px) var(--pad-x) 54px;
+    background: var(--color-surface);
+  }
+
+  /* Foto da versão mobile (768x735). O recorte mostra só a faixa da
+     composição, como no Figma (a página tem fundo branco). */
+  .hero__media {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100vw;
+    height: clamp(340px, 91.3vw, 520px);
+    overflow: hidden;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .hero__image {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: max(768px, 100vw);
+    max-width: none;
+    height: auto;
+    transform: translateX(-50%);
+    object-fit: initial;
+  }
+
+  /* Sem véu branco sobre a foto: no Figma o gradiente branco fica atrás da
+     imagem (fundo), não em cima — era ele que criava o clarão no topo. */
+
+  /* Cartão de vidro que agrupa a chamada da hero */
+  .hero__panel {
+    position: relative;
+    z-index: 2;
+    max-width: var(--content);
+    margin: 0 auto;
+    padding: 30px 24px 28px;
+    border-radius: 14px;
+    background: rgba(235, 235, 235, 0.38);
+    -webkit-backdrop-filter: blur(16px) saturate(1.15);
+    backdrop-filter: blur(16px) saturate(1.15);
+    box-shadow:
+      0 24px 60px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.75);
+    text-align: center;
+  }
+
+  .hero__eyebrow {
+    margin: 0;
+    font-size: clamp(24px, 7vw, 31px);
+    line-height: 1.15;
+    text-align: center;
+  }
+
+  .hero__title {
+    margin: 2px 0 0;
+    font-size: clamp(50px, 15.5vw, 72px);
+    line-height: 1.12;
+    text-align: center;
+  }
+
+  .hero__text {
+    max-width: 30ch;
+    margin: 8px auto 0;
+    font-size: 16px;
+    line-height: 1.55;
+    text-align: center;
+  }
+
+  /* ------------------------------------------------------------------------
+     Botões (todos iguais no mobile)
+     ------------------------------------------------------------------------ */
+  .btn {
+    position: relative;
+    display: flex;
+    width: fit-content;
+    min-width: 200px;
+    height: 48px;
+    margin: 22px auto 0;
+    padding: 12px 22px;
+    gap: 10px;
+    font-size: 15px;
+  }
+
+  .hero__panel .btn {
+    min-width: 220px;
+    max-width: 100%;
+  }
+
+  /* ------------------------------------------------------------------------
+     Divisória (lâmina de vidro da dobra 2) + ícone CONFERIR
+     Mesma receita do desktop: lâmina translúcida com blur sobre o fim
+     claro da hero, vinco cortando a lâmina e o ícone montado na borda.
+     ------------------------------------------------------------------------ */
+  .divider {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100vw;
+    /* Caixa recorta o desenho: só a região do vinco + um pouco de lâmina.
+       O vinco é o curva do desktop em escala uniforme 0.85 (0.85 x 71px de
+       fundo) — mesma curva, só um pouco menor. */
+    height: calc(0.85 * 71px + 24px);
+    overflow: hidden;
+    margin-left: calc(50% - 50vw);
+    margin-top: -40px;
+    background: rgba(0, 0, 0, 0.05);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    transform: none;
+  }
+
+  /* O SVG do desktop em escala uniforme 0.85: a curva mantém EXATAMENTE a
+     proporção do desktop (vinco 229.5px x 60.35px), só reduzida. Em telas
+     de largura intermediária ele cresce proporcionalmente (max 100vw) para
+     sempre cobrir a tela toda; a caixa recorta o resto. */
+  .divider .divider__desk {
+    display: block;
+    width: max(calc(1230px * 0.85), 100vw);
+    height: auto;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .icone-conferir {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 64px;
+    height: 64px;
+    /* Montado na borda do vinco, como no desktop: 25.6px acima da divisória
+       (ícone 64px). Vinco com 60.35px de fundo (escala 0.85 do desktop). */
+    margin: calc(-0.85 * 71px - 24px - 25.6px) auto calc(0.85 * 71px + 25.6px);
+    z-index: 3;
+  }
+
+  /* ------------------------------------------------------------------------
+     Manifesto
+     ------------------------------------------------------------------------ */
+  .manifesto {
+    position: relative;
+    z-index: 1;
+    padding: 0 var(--pad-x) 44px;
+    text-align: center;
+  }
+
+  .manifesto__title {
+    /* O <br> depois de "FAZER" garante as duas linhas do desenho. O tamanho
+       acompanha a largura para a primeira linha ("NÃO É SOBRE FAZER") caber
+       inteira em qualquer celular. */
+    max-width: none;
+    margin: 0 auto;
+    font-size: clamp(18px, 5.4vw, 25px);
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+
+  .manifesto__text {
+    max-width: 36em;
+    margin: 14px auto 0;
+    font-size: 15px;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  /* ------------------------------------------------------------------------
+     Trabalhos em vídeo
+     ------------------------------------------------------------------------ */
+  .trabalhos {
+    padding: 0 var(--pad-x) 64px;
+    text-align: center;
+  }
+
+  .trabalhos__title {
+    display: none;
+  }
+
+  .trabalhos__thumb {
+    width: 100%;
+    max-width: var(--content);
+    height: auto;
+    aspect-ratio: 482 / 271;
+    margin: 0 auto 18px;
+    object-fit: cover;
+  }
+
+  .trabalhos .btn {
+    margin: 26px auto 0;
+  }
+
+  /* ------------------------------------------------------------------------
+     Portfólio
+     ------------------------------------------------------------------------ */
+  .portfolio {
+    position: relative;
+    padding: 56px var(--pad-x) 64px;
+    text-align: center;
+  }
+
+  .portfolio__texture {
+    display: none;
+  }
+
+  .portfolio__bg {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 100vw;
+    height: auto;
+    transform: translateX(-50%);
+  }
+
+  .portfolio__title {
+    position: relative;
+    z-index: 1;
+    max-width: 15em;
+    margin: 0 auto;
+    font-size: clamp(20px, 5.6vw, 25px);
+    line-height: 1.25;
+  }
+
+  .portfolio__text {
+    position: relative;
+    z-index: 1;
+    max-width: 34em;
+    margin: 14px auto 0;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .carousel {
+    --card-w: clamp(200px, 62vw, 330px);
+    position: relative;
+    left: auto;
+    top: auto;
+    z-index: 1;
+    width: 100vw;
+    height: calc(var(--card-w) * 1.2353 + 56px);
+    margin: 10px calc(50% - 50vw) 0;
+  }
+
+  .carousel__card {
+    width: var(--card-w);
+    height: calc(var(--card-w) * 1.2353);
+    border-radius: 14px;
+  }
+
+  .carousel__fade {
+    width: 13%;
+  }
+
+  .portfolio .btn {
+    position: relative;
+    z-index: 1;
+    margin: 24px auto 0;
+  }
+
+  /* ------------------------------------------------------------------------
+     Chamada final (CTA)
+     ------------------------------------------------------------------------ */
+  .cta {
+    position: relative;
+    padding: 64px var(--pad-x) 72px;
+  }
+
+  /* Textura da última dobra: no mobile ela é o MESMO overlay do desktop
+     (.final-bg), um único elemento contínuo da CTA até o fim da página.
+     O JS define o top (início da CTA); o desktop mantém o top fixo do CSS. */
+  .cta::before {
+    content: none;
+  }
+
+  .final-bg {
+    display: block;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    top: auto; /* o script.js posiciona no topo da CTA */
+    width: 100vw;
+    transform: translateX(-50%);
+    background-image:
+      radial-gradient(
+        120% 85% at 50% 42%,
+        rgba(0, 0, 0, 0.68) 0%,
+        rgba(0, 0, 0, 0.84) 45%,
+        rgba(0, 0, 0, 0.96) 100%
+      ),
+      url("assets/bg-dobras.png"),
+      url("assets/bg-dobras.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%, cover, cover;
+    background-position: center center, center top, center top;
+    pointer-events: none;
+  }
+
+  .cta__panel {
+    position: relative;
+    z-index: 1;
+    max-width: var(--content);
+    margin: 0 auto;
+    padding: 32px 24px 30px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: var(--radius-card);
+    /* Mesma receita de vidro do quadrado da última dobra no desktop:
+       gradiente branco translúcido + blur forte + sombra com brilho interno */
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.04) 45%,
+      rgba(255, 255, 255, 0.07) 100%
+    );
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+    backdrop-filter: blur(18px) saturate(1.4);
+    box-shadow:
+      0 28px 70px rgba(0, 0, 0, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+    text-align: center;
+  }
+
+  .cta__card {
+    display: none;
+  }
+
+  .cta__title {
+    max-width: 14em;
+    margin: 0 auto;
+    font-size: clamp(20px, 5.6vw, 25px);
+    line-height: 1.3;
+  }
+
+  .cta__title-mark {
+    font-size: 1.15em;
+    line-height: 1;
+  }
+
+  .cta__text {
+    max-width: 32em;
+    margin: 14px auto 0;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .cta .btn {
+    margin: 24px auto 0;
+  }
+
+  /* ------------------------------------------------------------------------
+     Rodapé
+     ------------------------------------------------------------------------ */
+  .footer {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    transform: none;
+  }
+
+  .footer__inner {
+    width: auto;
+    max-width: none;
+    padding: 22px var(--gutter);
+  }
+
+  .footer__copy {
+    font-size: 11.5px;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+}
+
+/* Ajustes finos para telas bem estreitas (iPhone SE e similares) */
+@media (max-width: 359.98px) {
+  :root {
+    --gutter: 18px;
+  }
+
+  .hero__panel {
+    padding: 26px 18px 24px;
+  }
+
+  .btn {
+    min-width: 0;
+    width: 100%;
+    max-width: 260px;
+  }
+
+  /* Mantém "NÃO É SOBRE FAZER" em uma linha só */
+  .manifesto__title {
+    font-size: 17.5px;
+  }
+
+  .footer__copy {
+    font-size: 10.5px;
+  }
+}

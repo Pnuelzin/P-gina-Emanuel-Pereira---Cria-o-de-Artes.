@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arte. — Portfólio</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="responsive.css" />
+  </head>
+  <body>
+    <div class="page">
+      <!-- ===== HERO ===== -->
+      <section class="hero" aria-labelledby="hero-titulo">
+        <picture class="hero__media">
+          <source
+            media="(max-width: 1229.98px)"
+            srcset="assets/HERO%20MOBILE.png"
+          />
+          <img
+            class="hero__image"
+            src="assets/hero-man.png"
+            alt=""
+            aria-hidden="true"
+            width="1230"
+            height="653"
+            loading="eager"
+            decoding="async"
+          />
+        </picture>
+
+        <div class="hero__panel">
+          <p class="hero__eyebrow text-ink" id="hero-titulo">
+            Não é só<br />mais uma
+          </p>
+
+          <h1 class="hero__title text-accent">arte.</h1>
+
+          <p class="hero__text text-ink">
+            É o tipo de trabalho que faz você parar para olhar, mesmo quando
+            estava só passando.
+          </p>
+
+          <a
+            class="btn btn--explore"
+            href="https://api.whatsapp.com/send/?phone=%2B5584986800555&text=Oi%20emanuel%2C%20gostaria%20de%20ver%20um%20or%C3%A7amento%20com%20voc%C3%AA.&type=phone_number&app_absent=0"
+            target="_blank"
+            rel="noopener"
+          >
+            <span>SOLICITAR ORÇAMENTO</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Glass Tiles: parede de vidros com luz atrás da lâmina da dobra 2 -->
+      <div class="glass-tiles" aria-hidden="true">
+        <canvas class="glass-tiles__canvas"></canvas>
+      </div>
+
+      <!-- Divisória hero → manifesto (shape de vidro original) -->
+      <div class="divider" aria-hidden="true">
+        <svg
+          class="divider__desk"
+          width="1230"
+          height="1160"
+          viewBox="0 0 1230 1160"
+          preserveAspectRatio="none"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <use xlink:href="#stroke0_248_19" fill="#1C1C1C" fill-opacity="0.2" />
+          <mask id="stroke1_248_19" fill="white">
+            <use xlink:href="#stroke0_248_19" />
+          </mask>
+          <path
+            d="M1250.5 1159.5H-18V0H483C518.346 0 546.237 33.7278 573.941 55.6793C586.047 65.2719 601.354 71 618 71C634.646 71 649.953 65.2719 662.059 55.6793C689.763 33.7278 717.654 0 753 0H1250.5V1159.5Z"
+            stroke-width="2"
+            stroke="url(#paint0_linear_248_19)"
+            mask="url(#stroke1_248_19)"
+          />
+          <defs>
+            <linearGradient
+              id="paint0_linear_248_19"
+              x1="617.5"
+              y1="0"
+              x2="617.5"
+              y2="723.001"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="white" />
+              <stop offset="1" />
+            </linearGradient>
+            <path
+              id="stroke0_248_19"
+              d="M1250.5 1159.5H-18V0H483C518.346 0 546.237 33.7278 573.941 55.6793C586.047 65.2719 601.354 71 618 71C634.646 71 649.953 65.2719 662.059 55.6793C689.763 33.7278 717.654 0 753 0H1250.5V1159.5Z"
+            />
+          </defs>
+        </svg>
+      </div>
+
+      <!-- Ícone CONFERIR rotativo (no lugar do antigo scroll-hint, entre hero e dobra 2) -->
+      <div class="icone-conferir" aria-hidden="true">
+        <img
+          src="assets/ICONE CONFERIR.svg"
+          alt="Ícone Conferir"
+          width="75"
+          height="75"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+
+      <!-- ===== MANIFESTO ===== -->
+      <section class="manifesto" aria-labelledby="manifesto-titulo">
+        <h2
+          class="manifesto__title display-sm text-light"
+          id="manifesto-titulo"
+        >
+          <span class="text-light">NÃO É SOBRE FAZER </span><br />
+          <span class="text-accent">MAIS DO MESMO.</span>
+        </h2>
+
+        <p class="manifesto__text body-text text-light">
+          Cada projeto começa de um jeito. Uma referência, uma ideia fora do
+          padrão ou aquela vontade de criar algo que ainda não existe. Meu
+          trabalho é explorar essas possibilidades e transformar tudo isso em
+          uma peça visual com personalidade.
+        </p>
+      </section>
+
+      <!-- ===== TRABALHOS EM VÍDEO ===== -->
+      <section class="trabalhos" aria-labelledby="trabalhos-titulo">
+        <h2 class="trabalhos__title display-sm text-light" id="trabalhos-titulo"></h2>
+
+        <img
+          class="trabalhos__thumb trabalhos__thumb--1"
+          src="assets/thumb-ao-vivo.png"
+          alt="Projeto Ao Vivo"
+          loading="lazy"
+          decoding="async"
+        />
+        <img
+          class="trabalhos__thumb trabalhos__thumb--2"
+          src="assets/thumb-2.png"
+          alt="Projeto 2"
+          loading="lazy"
+          decoding="async"
+        />
+        <img
+          class="trabalhos__thumb trabalhos__thumb--3"
+          src="assets/thumb-3.png"
+          alt="Projeto 3"
+          loading="lazy"
+          decoding="async"
+        />
+        <img
+          class="trabalhos__thumb trabalhos__thumb--4"
+          src="assets/thumb-skanner.png"
+          alt="Projeto Skanner"
+          loading="lazy"
+          decoding="async"
+        />
+      </section>
+
+      <!-- ===== PORTFÓLIO ===== -->
+      <section class="portfolio" aria-labelledby="portfolio-titulo">
+        <img
+          class="portfolio__texture"
+          src="assets/bg-dobras.png"
+          alt=""
+          aria-hidden="true"
+          width="1523"
+          height="1358"
+          loading="lazy"
+          decoding="async"
+        />
+        <div class="portfolio__bg" aria-hidden="true"></div>
+
+        <h2 class="portfolio__title display-sm" id="portfolio-titulo">
+          <span class="text-ink">BELEZA, AGORA<br /> </span>
+          <span class="text-accent"
+            >OLHA IS<span class="portfolio__title-letter">S</span>O.</span
+          >
+        </h2>
+
+        <p class="portfolio__text body-text">
+          Uma seleção de flyers, criativos e projetos que mostram diferentes
+          ideias, estilos e caminhos visuais.
+        </p>
+
+        <!-- Carrossel 3D em anel (estilo Tholos) -->
+        <div
+          class="carousel"
+          data-carousel
+          role="region"
+          aria-roledescription="carrossel"
+          aria-label="Seleção de projetos"
+          tabindex="0"
+        >
+          <div class="carousel__stage">
+            <figure class="carousel__card">
+              <img
+                src="assets/VENDA 3.jpg"
+                alt="Peça Venda 3"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="carousel__shade" aria-hidden="true"></span>
+            </figure>
+            <figure class="carousel__card">
+              <img
+                src="assets/CAPA 4.jpg"
+                alt="Capa 4"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="carousel__shade" aria-hidden="true"></span>
+            </figure>
+            <figure class="carousel__card">
+              <img
+                src="assets/PG 1.jpg"
+                alt="Página 1"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="carousel__shade" aria-hidden="true"></span>
+            </figure>
+            <figure class="carousel__card">
+              <img
+                src="assets/CAPA.jpg"
+                alt="Capa"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="carousel__shade" aria-hidden="true"></span>
+            </figure>
+            <figure class="carousel__card">
+              <img
+                src="assets/POST 2.jpg"
+                alt="Post 2"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="carousel__shade" aria-hidden="true"></span>
+            </figure>
+            <figure class="carousel__card">
+              <img
+                src="assets/POST 2.png"
+                alt="Post 2 — versão alternativa"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="carousel__shade" aria-hidden="true"></span>
+            </figure>
+            <figure class="carousel__card">
+              <img
+                src="assets/CAPA 3.jpg"
+                alt="Capa 3"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="carousel__shade" aria-hidden="true"></span>
+            </figure>
+            <figure class="carousel__card">
+              <img
+                src="assets/CAPA 2.jpg"
+                alt="Capa 2"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="carousel__shade" aria-hidden="true"></span>
+            </figure>
+            <figure class="carousel__card">
+              <img
+                src="assets/flyer-hallowfunk.png"
+                alt="Flyer Hallowfunk"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="carousel__shade" aria-hidden="true"></span>
+            </figure>
+            <figure class="carousel__card">
+              <img
+                src="assets/flyer-image-8.png"
+                alt="Flyer de evento"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="carousel__shade" aria-hidden="true"></span>
+            </figure>
+            <figure class="carousel__card">
+              <img
+                src="assets/arte-evento.png"
+                alt="Arte de evento"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="carousel__shade" aria-hidden="true"></span>
+            </figure>
+          </div>
+
+          <div
+            class="carousel__fade carousel__fade--left"
+            aria-hidden="true"
+          ></div>
+          <div
+            class="carousel__fade carousel__fade--right"
+            aria-hidden="true"
+          ></div>
+        </div>
+
+        <a
+          class="btn btn--portfolio"
+          href="https://www.behance.net/eu_nuelzinho"
+          target="_blank"
+          rel="noopener"
+          >VER PORTFÓLIO</a
+        >
+      </section>
+
+      <!-- Textura da última dobra (bg-dobras.png), de ponta a ponta -->
+      <div class="final-bg" aria-hidden="true"></div>
+
+      <!-- ===== CHAMADA FINAL (CTA) ===== -->
+      <section class="cta" aria-labelledby="cta-titulo">
+        <div class="cta__panel">
+          <div class="cta__card" aria-hidden="true"></div>
+
+          <h2 class="cta__title display-sm text-light" id="cta-titulo">
+            <span class="text-light">E AÍ, VAMOS </span>
+            <span class="text-accent">CRIAR O TEU</span>
+            <span class="text-accent cta__title-mark">?</span>
+          </h2>
+
+          <p class="cta__text body-text text-light">
+            Já imaginou tua ideia ganhando forma por aqui? Me conta o que tu
+            precisa e vamos conversar sobre teu próximo projeto.
+          </p>
+
+          <a
+            class="btn btn--quote"
+            href="https://api.whatsapp.com/send/?phone=%2B5584986800555&text=Oi%20emanuel%2C%20gostaria%20de%20ver%20um%20or%C3%A7amento%20com%20voc%C3%AA.&type=phone_number&app_absent=0"
+            target="_blank"
+            rel="noopener"
+            >SOLICITAR ORÇAMENTO</a
+          >
+        </div>
+      </section>
+
+      <!-- ===== RODAPÉ ===== -->
+      <footer class="footer" id="contato">
+        <div class="footer__inner">
+          <p class="footer__copy">
+            <span class="footer__name">Emanuel Pereira</span>
+            <span class="footer__role">designer</span>
+            <span class="footer__rights"
+              >© 2026 | Todos os direitos reservados.</span
+            >
+          </p>
+        </div>
+      </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js" defer></script>
+    <script src="text-intro.js" defer></script>
+    <script src="script.js" defer></script>
+    <script src="glass-tiles.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+FONTE DA PÁGINA — STRETCH PRO
+=============================
+
+SITUAÇÃO ATUAL: JÁ ESTÁ FUNCIONANDO
+-----------------------------------
+Arquivo: fonts/StretchPro.woff2 (69 KB)
+O styles.css já aponta para ele. Não precisa fazer nada.
+
+Para conferir: abra a página, F12 -> Console e rode
+
+    document.fonts.check('16px "Stretch Pro"')
+
+true = a fonte carregou | false = está usando a reserva (Archivo Black)
+
+
+LICENÇA (importante)
+--------------------
+Stretch Pro é do Jetsmax Studio — https://jetsmax.com/stretch-pro/
+
+- Uso pessoal / estudo: liberado.
+- Uso comercial (site de cliente, portfólio que vende serviço etc.):
+  é preciso comprar a licença. Para site existe a opção "Web Font",
+  que já vem em .woff (basta renomear para .woff2 ou trocar a
+  extensão no @font-face do styles.css).
+
+
+SE PRECISAR TROCAR O ARQUIVO
+----------------------------
+1. Salve a fonte como fonts/StretchPro.woff2 (mesmo nome, substituindo).
+2. Se o arquivo novo for .otf/.ttf, converta antes:
+   - Online: https://cloudconvert.com/otf-to-woff2
+   - Linha de comando: pip install fonttools brotli
+                       fonttools ttLib.woff2 compress StretchPro.otf
+
+
+OBSERVAÇÕES
+-----------
+- O CSS também usa local("Stretch Pro"): quem tiver a fonte instalada
+  no computador usa a versão local, sem baixar nada.
+- Stretch Pro tem ligaduras: no Figma, digitar "AA" gera uma barra
+  esticada. O texto atual da página não usa esse recurso.

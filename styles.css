@@ -1,0 +1,860 @@
+/* ==========================================================================
+   Arte. — "Não é só mais uma"
+   --------------------------------------------------------------------------
+   Layout absoluto (export do Figma), largura fixa de 1230px.
+   As <section> do HTML são apenas organizacionais: elas não têm
+   posicionamento, então cada elemento se posiciona em relação à .page.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  --color-bg: #000;
+  --color-surface: #fff;
+  --color-accent: #ffa058;
+  --color-light: #fff;
+  --color-ink: #000;
+
+  --font-display: "Stretch Pro", "Archivo Black", "Montserrat", sans-serif;
+  --font-body: "Montserrat", system-ui, sans-serif;
+  --font-ui: "Inter", system-ui, sans-serif;
+
+  --radius-btn: 8px;
+  --radius-card: 21px;
+
+  /* Hero em tela cheia: a foto cobre a altura da janela (mínimo 698px, que é
+     o desenho original). O resto da página desce pela diferença. */
+  --hero-h: max(698px, 100vh);
+  --hero-shift: max(0px, calc(100vh - 698px));
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* --------------------------------------------------------------------------
+   Fonte da marca — Stretch Pro (Jetsmax Studio)
+   --------------------------------------------------------------------------
+   A página procura a fonte nesta ordem:
+     1. instalada no computador do visitante (local)
+     2. arquivo fonts/StretchPro.woff2
+     3. "Archivo Black" do Google Fonts, como reserva
+
+   Licença e detalhes em: fonts/LEIA-ME.txt
+   -------------------------------------------------------------------------- */
+@font-face {
+  font-family: "Stretch Pro";
+  src:
+    local("Stretch Pro"),
+    local("StretchPro-Regular"),
+    url("fonts/StretchPro.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --------------------------------------------------------------------------
+   2. Base
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-light);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  /* Evita barra de rolagem horizontal quando os fundos ocupam 100vw */
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   3. Página
+   -------------------------------------------------------------------------- */
+.page {
+  position: relative;
+  z-index: 1;
+  width: 1230px;
+  margin: 0 auto;
+  /* Visível para os fundos (hero / dobras) poderem ocupar 100vw */
+  overflow: visible;
+  /* Altura mínima para caber todo o conteúdo (última dobra + rodapé) */
+  min-height: 3320px;
+  /* Transparente para a foto da hero (que fica atrás) aparecer;
+     o preto vem do body. */
+  background: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   4. Tipografia reutilizável
+   -------------------------------------------------------------------------- */
+.display-sm {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 26.31px;
+  font-weight: 400;
+  line-height: 30.18px;
+  text-transform: uppercase;
+  overflow-wrap: break-word;
+}
+
+.body-text {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 21.34px;
+  font-weight: 400;
+  overflow-wrap: break-word;
+}
+
+.text-light {
+  color: var(--color-light);
+}
+
+.text-accent {
+  color: var(--color-accent);
+}
+
+.text-ink {
+  color: var(--color-ink);
+}
+
+/* --------------------------------------------------------------------------
+   5. Botões — efeito "liquid metal"
+   --------------------------------------------------------------------------
+   Inspirado no LiquidMetalButton do Framer, recriado em CSS puro:
+   ::before → borda cromada girando; ::after → brilho varrendo a superfície.
+   A cor base continua sendo o laranja original (--color-accent).
+   -------------------------------------------------------------------------- */
+/* Ângulo da borda cromada. Registrado com @property para poder ser animado.
+   Navegadores sem suporte mostram a borda parada — o botão não quebra. */
+@property --edge-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.btn {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11.9px;
+  width: 326px;
+  height: 62px;
+  padding: 11.9px;
+  border: 0;
+  border-radius: var(--radius-btn);
+  overflow: hidden;
+  color: var(--color-light);
+  font-family: var(--font-ui);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  isolation: isolate;
+  /* Laranja original + bisel de vidro (luz em cima, sombra embaixo) */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.22),
+      rgba(255, 255, 255, 0) 42%
+    ),
+    var(--color-accent);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.55),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.16);
+  transition:
+    transform 0.25s var(--ease),
+    filter 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
+}
+
+/* Borda cromada: duas luzes girando em sentidos opostos (mask deixa só o anel) */
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 3px;
+  pointer-events: none;
+  background:
+    conic-gradient(
+      from calc(var(--edge-angle) * -1 + 90deg),
+      rgba(255, 255, 255, 0.95),
+      transparent 32%,
+      #ffc890 56%,
+      transparent 82%
+    ),
+    conic-gradient(
+      from var(--edge-angle),
+      #ffffff,
+      #ffe4c4 10%,
+      #6b3208 22%,
+      #ffffff 36%,
+      #ffa058 48%,
+      #ffffff 60%,
+      #8f4712 72%,
+      #ffe9cd 86%,
+      #ffffff
+    );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation:
+    btn-edge-angle 4s linear infinite,
+    btn-edge-liquid 6s ease-in-out infinite;
+}
+
+/* Brilho especular varrendo a superfície */
+.btn::after {
+  content: "";
+  position: absolute;
+  top: -10%;
+  bottom: -10%;
+  left: -60%;
+  width: 45%;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent,
+    rgba(255, 255, 255, 0.68) 50%,
+    transparent
+  );
+  transform: skewX(-18deg);
+  animation: btn-sheen 4.2s var(--ease) infinite;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  filter: brightness(1.06);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.55),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.16),
+    0 12px 30px rgba(255, 160, 88, 0.38);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.985);
+  filter: brightness(0.95);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-light);
+  outline-offset: 3px;
+}
+
+/* CadA botão varre o brilho em um momento diferente */
+.btn--portfolio::after {
+  animation-delay: 2.8s;
+}
+
+.btn--quote::after {
+  animation-delay: 4.1s;
+}
+
+@keyframes btn-edge-angle {
+  to {
+    --edge-angle: 360deg;
+  }
+}
+
+/* Espessura da borda variando = leitura de metal líquido */
+@keyframes btn-edge-liquid {
+  0%,
+  100% {
+    padding: 3px;
+  }
+  50% {
+    padding: 2.1px 3.6px;
+  }
+}
+
+@keyframes btn-sheen {
+  0%,
+  55% {
+    left: -60%;
+  }
+  90%,
+  100% {
+    left: 115%;
+  }
+}
+
+.btn--explore {
+  left: 119px;
+  top: 395px;
+}
+
+.btn--portfolio {
+  left: 452px;
+  top: 2496px;
+}
+
+.btn--quote {
+  left: 452px;
+  top: 2952px;
+}
+
+/* --------------------------------------------------------------------------
+   6. Hero
+   -------------------------------------------------------------------------- */
+/* Foto da hero: cobre toda a janela (largura e altura), sem barras pretas.
+   Fica atrás da .page, então o conteúdo continua legível por cima. */
+.hero__image {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  max-width: none;
+  height: var(--hero-h);
+  object-fit: cover;
+  object-position: center top;
+  transform: translateX(-50%);
+}
+
+.hero__eyebrow {
+  position: absolute;
+  left: 140.39px;
+  top: 135px;
+  width: 307.77px;
+  margin: 0;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: 37.92px;
+  font-weight: 400;
+  line-height: 43.5px;
+  text-transform: uppercase;
+  overflow-wrap: break-word;
+}
+
+.hero__title {
+  position: absolute;
+  left: 119px;
+  top: 207px;
+  width: 350.55px;
+  margin: 0;
+  color: var(--color-accent);
+  font-family: var(--font-display);
+  font-size: 83.18px;
+  font-weight: 400;
+  line-height: 95.42px;
+  text-transform: uppercase;
+}
+
+.hero__text {
+  position: absolute;
+  left: 119px;
+  top: 301px;
+  width: 372px;
+  margin: 0;
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 21.34px;
+  font-weight: 400;
+  overflow-wrap: break-word;
+}
+
+/* --------------------------------------------------------------------------
+   7. Manifesto
+   -------------------------------------------------------------------------- */
+/* Shape de transição entre a hero e o manifesto: atravessa a tela toda */
+.divider {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--hero-h) - 40px);
+  width: 100vw;
+  height: 1160px;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(8px);
+  transform: translateX(-50%);
+}
+
+.divider svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* A onda extra só existe no layout mobile (responsive.css) */
+.divider .divider__wave {
+  display: none;
+}
+
+/* ===== Ícone CONFERIR rotativo =====
+   A rotação fica dentro do próprio SVG (animateTransform) e é carregada
+   via <img>; aqui só posicionamos o bloco. */
+.icone-conferir {
+  position: absolute;
+  left: 580px;
+  top: calc(var(--hero-h) - 70px);
+  width: 75px;
+  height: 75px;
+  pointer-events: none;
+}
+
+.icone-conferir img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.manifesto__title {
+  position: absolute;
+  left: 397px;
+  top: 780px;
+  width: 437px;
+  text-align: center;
+  scroll-margin-top: 40px;
+}
+
+.manifesto__text {
+  position: absolute;
+  left: 286px;
+  top: 856px;
+  width: 658px;
+  color: var(--color-light);
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   8. Trabalhos em vídeo
+   -------------------------------------------------------------------------- */
+.trabalhos__title {
+  position: absolute;
+  left: 119px;
+  top: 960px;
+}
+
+.trabalhos__thumb {
+  position: absolute;
+  width: 482px;
+  height: 271px;
+  object-fit: cover;
+}
+
+.trabalhos__thumb--1 {
+  left: 119px;
+  top: 1040px;
+  scroll-margin-top: 40px;
+}
+
+.trabalhos__thumb--2 {
+  left: 615px;
+  top: 1040px;
+}
+
+.trabalhos__thumb--3 {
+  left: 119px;
+  top: 1329px;
+}
+
+.trabalhos__thumb--4 {
+  left: 615px;
+  top: 1329px;
+}
+
+/* --------------------------------------------------------------------------
+   9. Portfólio
+   -------------------------------------------------------------------------- */
+.portfolio__texture {
+  position: absolute;
+  left: 50%;
+  top: 2558px;
+  width: 100vw;
+  max-width: none;
+  /* Termina junto com o fim da página: antes ia até 3915px e criava
+     ~500px de rolagem vazia depois do rodapé. */
+  height: 760px;
+  object-fit: cover;
+  opacity: 0.09;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.portfolio__bg {
+  position: absolute;
+  left: 50%;
+  top: 1769px;
+  width: 100vw;
+  height: 851px;
+  background: var(--color-surface);
+  z-index: 0;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.portfolio__title {
+  position: absolute;
+  left: 386px;
+  top: 1838px;
+  width: 459px;
+  text-align: center;
+  scroll-margin-top: 40px;
+}
+
+.portfolio__title-letter {
+  /* O "S" central acompanha o texto (inline) em vez de ser uma camada
+     absoluta — assim ele continua alinhado em qualquer largura.
+     No Figma: caixa de 44px sobre um vão de 28,2px (daí as margens
+     negativas, que fazem o S "invadir" as letras vizinhas). */
+  display: inline-block;
+  width: 1.6725em;
+  margin-inline: -0.3em;
+  color: inherit;
+  text-align: center;
+}
+
+.portfolio__text {
+  position: absolute;
+  left: 286px;
+  top: 1911px;
+  width: 658px;
+  color: var(--color-ink);
+  text-align: center;
+}
+
+/* Carrossel 3D em anel (estilo Tholos) --------------------------------------
+   Os cards são posicionados por JS (script.js) dentro do palco com
+   perspectiva. Sem JS eles ficam ocultos. */
+.carousel {
+  position: absolute;
+  left: 0;
+  top: 1985px;
+  width: 1230px;
+  height: 475px;
+  overflow: hidden;
+  isolation: isolate;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+}
+
+.carousel:active {
+  cursor: grabbing;
+}
+
+.carousel:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 6px;
+  border-radius: 24px;
+}
+
+.carousel__stage {
+  position: absolute;
+  inset: 0;
+  perspective: 1300px;
+  perspective-origin: 50% 50%;
+}
+
+.carousel__card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 340px;
+  height: 420px;
+  margin: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #17171b;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+  will-change: transform, opacity, filter;
+  visibility: hidden;
+  transform: translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+.carousel.is-ready .carousel__card {
+  visibility: visible;
+}
+
+.carousel__card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.carousel__shade {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Fades laterais na cor do fundo da dobra (branco) */
+.carousel__fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 18%;
+  z-index: 900;
+  pointer-events: none;
+}
+
+.carousel__fade--left {
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    var(--color-surface) 0%,
+    var(--color-surface) 8%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.carousel__fade--right {
+  right: 0;
+  background: linear-gradient(
+    270deg,
+    var(--color-surface) 0%,
+    var(--color-surface) 8%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel {
+    cursor: default;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   10. Chamada final
+   -------------------------------------------------------------------------- */
+.cta__card {
+  position: absolute;
+  left: 141px;
+  top: 2689px;
+  width: 948px;
+  height: 428px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: var(--radius-card);
+  /* Efeito glass: leve camada branca + desfoque do fundo */
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.04) 45%,
+    rgba(255, 255, 255, 0.07) 100%
+  );
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow:
+    0 28px 70px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+  scroll-margin-top: 40px;
+}
+
+.cta__title {
+  position: absolute;
+  left: 285px;
+  top: 2778px;
+  width: 660px;
+  text-align: center;
+  scroll-margin-top: 40px;
+}
+
+.cta__title-mark {
+  font-size: 30px;
+  line-height: 34.41px;
+}
+
+.cta__text {
+  position: absolute;
+  left: 286px;
+  top: 2834px;
+  width: 658px;
+  color: var(--color-light);
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   11b. Glass Tiles — parede de vidros atrás da dobra 2
+   -------------------------------------------------------------------------- */
+/* Camada atrás da dobra 2 (da divisória ao fim da última foto).
+   Fica ATRÁS da lâmina de vidro: o blur do .divider desfoca os feixes.
+   Cor/altura definidas via JS; pointer-events none; sem interatividade. */
+.glass-tiles {
+  position: absolute;
+  z-index: -1; /* atrás de TODO o conteúdo da dobra (o vidro incluído) */
+  left: 50%;
+  width: 100vw;
+  opacity: 0.1; /* efeito mais discreto atrás do vidro */
+  /* top/height definidos pelo script.js (alinha com a divisória) */
+  transform: translateX(-50%);
+  pointer-events: none;
+  /* Véu para manter a leitura do texto sobre os feixes */
+}
+
+.glass-tiles__canvas {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Escurece suavemente o topo (região do vinco) e a base, preservando
+   os textos da dobra 2 por cima dos feixes */
+.glass-tiles::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.1) 18%,
+    rgba(0, 0, 0, 0) 34%,
+    rgba(0, 0, 0, 0) 72%,
+    rgba(0, 0, 0, 0.35) 100%
+  );
+}
+
+/* --------------------------------------------------------------------------
+   11. Última dobra (background) + rodapé
+   -------------------------------------------------------------------------- */
+/* Textura bg-dobras.png de ponta a ponta. A própria imagem já é bem
+   transparente, por isso é empilhada 2x para ficar visível sem precisar
+   gerar outro arquivo. O gradiente escurece as bordas e preserva a
+   leitura do texto. */
+.final-bg {
+  position: absolute;
+  left: 50%;
+  top: 2620px;
+  bottom: 0;
+  width: 100vw;
+  max-width: none;
+  pointer-events: none;
+  transform: translateX(-50%);
+  background-image:
+    radial-gradient(
+      120% 85% at 50% 42%,
+      rgba(0, 0, 0, 0.68) 0%,
+      rgba(0, 0, 0, 0.84) 45%,
+      rgba(0, 0, 0, 0.96) 100%
+    ),
+    url("assets/bg-dobras.png"), url("assets/bg-dobras.png");
+  background-repeat: no-repeat;
+  background-size:
+    100% 100%,
+    cover,
+    cover;
+  background-position:
+    center center,
+    center top,
+    center top;
+}
+
+.footer {
+  position: absolute;
+  left: 50%;
+  top: 3200px;
+  width: 100vw;
+  transform: translateX(-50%);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+}
+
+.footer__inner {
+  width: 1230px;
+  max-width: calc(100% - 80px);
+  margin: 0 auto;
+  padding: 38px 0 34px;
+  text-align: center;
+}
+
+.footer__copy {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.55);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+
+.footer__name {
+  color: var(--color-light);
+  font-weight: 500;
+}
+
+.footer__role {
+  color: var(--color-accent);
+}
+
+/* --------------------------------------------------------------------------
+   Conteúdo abaixo da hero
+   --------------------------------------------------------------------------
+   Quando a hero fica mais alta que os 698px originais, tudo o que vem depois
+   dela desce junto. Usa `translate` (e não `top`) para não mexer no desenho.
+   -------------------------------------------------------------------------- */
+.btn--portfolio,
+.btn--quote,
+.manifesto__title,
+.manifesto__text,
+.trabalhos__thumb,
+.glass-tiles,
+.portfolio__bg,
+.portfolio__title,
+.portfolio__text,
+.carousel,
+.portfolio__texture,
+.cta__card,
+.cta__title,
+.cta__text,
+.final-bg,
+.footer,
+.icone-conferir {
+  translate: 0 var(--hero-shift);
+}
+
+/* --------------------------------------------------------------------------
+   11. Acessibilidade
+   -------------------------------------------------------------------------- */
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .btn {
+    transition: none;
+  }
+
+  .btn::before,
+  .btn::after {
+    animation: none;
+  }
+}
