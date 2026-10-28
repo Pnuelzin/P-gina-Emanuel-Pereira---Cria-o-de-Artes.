@@ -832,8 +832,7 @@ img {
 .cta__title,
 .cta__text,
 .final-bg,
-.footer,
-.icone-conferir {
+.footer {
   translate: 0 var(--hero-shift);
 }
 
