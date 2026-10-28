@@ -706,7 +706,7 @@ img {
   z-index: -1; /* atrás de TODO o conteúdo da dobra (o vidro incluído) */
   left: 50%;
   width: 100vw;
-  opacity: 0.1; /* efeito mais discreto atrás do vidro */
+  opacity: 0.2; /* efeito mais discreto atrás do vidro */
   /* top/height definidos pelo script.js (alinha com a divisória) */
   transform: translateX(-50%);
   pointer-events: none;
